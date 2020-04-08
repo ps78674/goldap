@@ -1,7 +1,6 @@
 package message
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -51,10 +50,11 @@ func (control *Control) readComponents(bytes *Bytes) (err error) {
 				err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
 				return
 			}
-			if control.criticality == false {
-				err = errors.New(fmt.Sprintf("readComponents: criticality default value FALSE should not be specified"))
-				return
-			}
+			//// criticality can be set to false explicitly
+			// if control.criticality == false {
+			// 	err = errors.New(fmt.Sprintf("readComponents: criticality default value FALSE should not be specified"))
+			// 	return
+			// }
 		}
 	}
 	if bytes.HasMoreData() {
