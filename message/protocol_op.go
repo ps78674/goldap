@@ -5,7 +5,7 @@ import "fmt"
 func readProtocolOp(bytes *Bytes) (ret ProtocolOp, err error) {
 	tagAndLength, err := bytes.PreviewTagAndLength()
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readProtocolOp:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readProtocolOp: %s", err.Error())}
 		return
 	}
 	switch tagAndLength.Tag {
@@ -56,7 +56,7 @@ func readProtocolOp(bytes *Bytes) (ret ProtocolOp, err error) {
 		return
 	}
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readProtocolOp:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readProtocolOp: %s", err.Error())}
 		return
 	}
 	return

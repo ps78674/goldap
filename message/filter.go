@@ -29,12 +29,12 @@ func readFilter(bytes *Bytes) (filter Filter, err error) {
 	var tagAndLength TagAndLength
 	tagAndLength, err = bytes.PreviewTagAndLength()
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readFilter:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readFilter: %s", err.Error())}
 		return
 	}
 	err = tagAndLength.ExpectClass(classContextSpecific)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readFilter:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readFilter: %s", err.Error())}
 		return
 	}
 	switch tagAndLength.Tag {
@@ -63,7 +63,7 @@ func readFilter(bytes *Bytes) (filter Filter, err error) {
 		return
 	}
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readFilter:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readFilter: %s", err.Error())}
 		return
 	}
 	return

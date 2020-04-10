@@ -9,7 +9,7 @@ func readAssertionValue(bytes *Bytes) (assertionvalue AssertionValue, err error)
 	var octetstring OCTETSTRING
 	octetstring, err = readOCTETSTRING(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readAssertionValue:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readAssertionValue: %s", err.Error())}
 		return
 	}
 	assertionvalue = AssertionValue(octetstring)
@@ -20,7 +20,7 @@ func readTaggedAssertionValue(bytes *Bytes, class int, tag int) (assertionvalue 
 	var octetstring OCTETSTRING
 	octetstring, err = readTaggedOCTETSTRING(bytes, class, tag)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readTaggedAssertionValue:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readTaggedAssertionValue: %s", err.Error())}
 		return
 	}
 	assertionvalue = AssertionValue(octetstring)

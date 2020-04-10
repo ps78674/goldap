@@ -9,7 +9,7 @@ import "fmt"
 func readBindResponse(bytes *Bytes) (bindresponse BindResponse, err error) {
 	err = bytes.ReadSubBytes(classApplication, TagBindResponse, bindresponse.readComponents)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readBindResponse:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readBindResponse: %s", err.Error())}
 		return
 	}
 	return
@@ -21,14 +21,14 @@ func (response *BindResponse) readComponents(bytes *Bytes) (err error) {
 		var tag TagAndLength
 		tag, err = bytes.PreviewTagAndLength()
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 			return
 		}
 		if tag.Tag == TagBindResponseServerSaslCreds {
 			var serverSaslCreds OCTETSTRING
 			serverSaslCreds, err = readTaggedOCTETSTRING(bytes, classContextSpecific, TagBindResponseServerSaslCreds)
 			if err != nil {
-				err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+				err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 				return
 			}
 			response.serverSaslCreds = serverSaslCreds.Pointer()

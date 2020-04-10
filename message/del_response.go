@@ -13,7 +13,7 @@ func readDelResponse(bytes *Bytes) (ret DelResponse, err error) {
 	var res LDAPResult
 	res, err = readTaggedLDAPResult(bytes, classApplication, TagDelResponse)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readDelResponse:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readDelResponse: %s", err.Error())}
 		return
 	}
 	ret = DelResponse(res)

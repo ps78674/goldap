@@ -8,7 +8,7 @@ import "fmt"
 func readAttributeValue(bytes *Bytes) (ret AttributeValue, err error) {
 	octetstring, err := readOCTETSTRING(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readAttributeValue:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readAttributeValue: %s", err.Error())}
 		return
 	}
 	ret = AttributeValue(octetstring)

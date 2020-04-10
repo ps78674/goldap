@@ -50,26 +50,26 @@ func NewLDAPMessage() *LDAPMessage { return &LDAPMessage{} }
 func (message *LDAPMessage) readComponents(bytes *Bytes) (err error) {
 	message.messageID, err = readMessageID(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 		return
 	}
 	message.protocolOp, err = readProtocolOp(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 		return
 	}
 	if bytes.HasMoreData() {
 		var tag TagAndLength
 		tag, err = bytes.PreviewTagAndLength()
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 			return
 		}
 		if tag.Tag == TagLDAPMessageControls {
 			var controls Controls
 			controls, err = readTaggedControls(bytes, classContextSpecific, TagLDAPMessageControls)
 			if err != nil {
-				err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+				err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 				return
 			}
 			message.controls = controls.Pointer()

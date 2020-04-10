@@ -6,7 +6,7 @@ func readTaggedMessageID(bytes *Bytes, class int, tag int) (ret MessageID, err e
 	var integer INTEGER
 	integer, err = readTaggedPositiveINTEGER(bytes, class, tag)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readTaggedMessageID:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readTaggedMessageID: %s", err.Error())}
 		return
 	}
 	return MessageID(integer), err

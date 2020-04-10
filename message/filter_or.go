@@ -6,7 +6,7 @@ import "fmt"
 func readFilterOr(bytes *Bytes) (filteror FilterOr, err error) {
 	err = bytes.ReadSubBytes(classContextSpecific, TagFilterOr, filteror.readComponents)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readFilterOr:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readFilterOr: %s", err.Error())}
 		return
 	}
 	return

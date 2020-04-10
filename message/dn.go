@@ -10,7 +10,7 @@ func readLDAPDN(bytes *Bytes) (ret LDAPDN, err error) {
 	var str LDAPString
 	str, err = readLDAPString(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readLDAPDN:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readLDAPDN: %s", err.Error())}
 		return
 	}
 	ret = LDAPDN(str)
@@ -21,7 +21,7 @@ func readTaggedLDAPDN(bytes *Bytes, class int, tag int) (ret LDAPDN, err error) 
 	var ldapstring LDAPString
 	ldapstring, err = readTaggedLDAPString(bytes, class, tag)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readTaggedLDAPDN:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readTaggedLDAPDN: %s", err.Error())}
 		return
 	}
 	// @TODO: check RFC4514
@@ -35,7 +35,7 @@ func readRelativeLDAPDN(bytes *Bytes) (ret RelativeLDAPDN, err error) {
 	var ldapstring LDAPString
 	ldapstring, err = readLDAPString(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readRelativeLDAPDN:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readRelativeLDAPDN: %s", err.Error())}
 		return
 	}
 	// @TODO: check RFC4514

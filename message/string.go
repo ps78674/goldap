@@ -6,7 +6,7 @@ func readTaggedLDAPString(bytes *Bytes, class int, tag int) (ldapstring LDAPStri
 	var octetstring OCTETSTRING
 	octetstring, err = readTaggedOCTETSTRING(bytes, class, tag)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readTaggedLDAPString:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readTaggedLDAPString: %s", err.Error())}
 		return
 	}
 	ldapstring = LDAPString(octetstring)

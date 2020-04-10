@@ -7,7 +7,7 @@ import "fmt"
 func readTaggedReferral(bytes *Bytes, class int, tag int) (referral Referral, err error) {
 	err = bytes.ReadSubBytes(class, tag, referral.readComponents)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readTaggedReferral:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readTaggedReferral: %s", err.Error())}
 		return
 	}
 	return
@@ -17,7 +17,7 @@ func (referral *Referral) readComponents(bytes *Bytes) (err error) {
 		var uri URI
 		uri, err = readURI(bytes)
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 			return
 		}
 		*referral = append(*referral, uri)

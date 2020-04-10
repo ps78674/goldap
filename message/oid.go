@@ -21,7 +21,7 @@ func readTaggedLDAPOID(bytes *Bytes, class int, tag int) (ret LDAPOID, err error
 	var octetstring OCTETSTRING
 	octetstring, err = readTaggedOCTETSTRING(bytes, class, tag)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readTaggedLDAPOID:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readTaggedLDAPOID: %s", err.Error())}
 		return
 	}
 	// @TODO: check RFC4512 for <numericoid>

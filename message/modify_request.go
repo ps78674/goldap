@@ -15,7 +15,7 @@ import "fmt"
 func readModifyRequest(bytes *Bytes) (ret ModifyRequest, err error) {
 	err = bytes.ReadSubBytes(classApplication, TagModifyRequest, ret.readComponents)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readModifyRequest:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readModifyRequest: %s", err.Error())}
 		return
 	}
 	return
@@ -23,7 +23,7 @@ func readModifyRequest(bytes *Bytes) (ret ModifyRequest, err error) {
 func (m *ModifyRequest) readComponents(bytes *Bytes) (err error) {
 	m.object, err = readLDAPDN(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 		return
 	}
 	err = bytes.ReadSubBytes(classUniversal, tagSequence, m.readChanges)
@@ -34,7 +34,7 @@ func (m *ModifyRequest) readChanges(bytes *Bytes) (err error) {
 		var c ModifyRequestChange
 		c, err = readModifyRequestChange(bytes)
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readChanges:\n%s", err.Error())}
+			err = LdapError{fmt.Sprintf("readChanges: %s", err.Error())}
 			return
 		}
 		m.changes = append(m.changes, c)

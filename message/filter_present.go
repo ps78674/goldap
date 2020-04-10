@@ -7,7 +7,7 @@ func readFilterPresent(bytes *Bytes) (ret FilterPresent, err error) {
 	var attributedescription AttributeDescription
 	attributedescription, err = readTaggedAttributeDescription(bytes, classContextSpecific, TagFilterPresent)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readFilterPresent:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readFilterPresent: %s", err.Error())}
 		return
 	}
 	ret = FilterPresent(attributedescription)

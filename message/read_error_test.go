@@ -15,9 +15,9 @@ func TestReadLDAPMessageError(t *testing.T) {
 	for i, test := range getLDAPMessageErrorTestData() {
 		message, err := ReadLDAPMessage(&test.bytes)
 		if err == nil {
-			t.Errorf("#%d: %s\nEXPECTED ERROR MESSAGE:\n%s\nGOT A LDAP STRUCT INSTEAD:\n%#+v", i, test.label, test.err, message)
+			t.Errorf("#%d: %s\nEXPECTED ERROR MESSAGE: %s\nGOT A LDAP STRUCT INSTEAD:\n%#+v", i, test.label, test.err, message)
 		} else if !strings.Contains(err.Error(), test.err) {
-			t.Errorf("#%d: %s\nGOT:\n%s\nEXPECTED:\n%s", i+1, test.label, err.Error(), test.err)
+			t.Errorf("#%d: %s\nGOT: %s\nEXPECTED: %s", i+1, test.label, err.Error(), test.err)
 		}
 	}
 }

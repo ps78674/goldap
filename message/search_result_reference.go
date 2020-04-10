@@ -8,7 +8,7 @@ import "fmt"
 func readSearchResultReference(bytes *Bytes) (ret SearchResultReference, err error) {
 	err = bytes.ReadSubBytes(classApplication, TagSearchResultReference, ret.readComponents)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readSearchResultReference:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readSearchResultReference: %s", err.Error())}
 		return
 	}
 	return
@@ -18,7 +18,7 @@ func (s *SearchResultReference) readComponents(bytes *Bytes) (err error) {
 		var uri URI
 		uri, err = readURI(bytes)
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 			return
 		}
 		*s = append(*s, uri)

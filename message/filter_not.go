@@ -16,7 +16,7 @@ func (filterNot FilterNot) size() (size int) {
 func (filterNot *FilterNot) readComponents(bytes *Bytes) (err error) {
 	filterNot.Filter, err = readFilter(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 		return
 	}
 	return
@@ -33,7 +33,7 @@ func (filterNot FilterNot) write(bytes *Bytes) (size int) {
 func readFilterNot(bytes *Bytes) (filternot FilterNot, err error) {
 	err = bytes.ReadSubBytes(classContextSpecific, TagFilterNot, filternot.readComponents)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readFilterNot:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readFilterNot: %s", err.Error())}
 		return
 	}
 	return

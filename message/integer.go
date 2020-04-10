@@ -6,7 +6,7 @@ func readINTEGER(bytes *Bytes) (ret INTEGER, err error) {
 	var value interface{}
 	value, err = bytes.ReadPrimitiveSubBytes(classUniversal, tagInteger, tagInteger)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readINTEGER:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readINTEGER: %s", err.Error())}
 		return
 	}
 	ret = INTEGER(value.(int32))
@@ -16,7 +16,7 @@ func readTaggedINTEGER(bytes *Bytes, class int, tag int) (ret INTEGER, err error
 	var value interface{}
 	value, err = bytes.ReadPrimitiveSubBytes(class, tag, tagInteger)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readTaggedINTEGER:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readTaggedINTEGER: %s", err.Error())}
 		return
 	}
 	ret = INTEGER(value.(int32))
@@ -25,7 +25,7 @@ func readTaggedINTEGER(bytes *Bytes, class int, tag int) (ret INTEGER, err error
 func readTaggedPositiveINTEGER(bytes *Bytes, class int, tag int) (ret INTEGER, err error) {
 	ret, err = readTaggedINTEGER(bytes, class, tag)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readTaggedPositiveINTEGER:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readTaggedPositiveINTEGER: %s", err.Error())}
 		return
 	}
 	if !(ret >= 0 && ret <= maxInt) {

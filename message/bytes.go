@@ -54,11 +54,11 @@ func (bytes *Bytes) ReadSubBytes(class int, tag int, callback func(bytes *Bytes)
 	// Check tag
 	tagAndLength, err := bytes.ParseTagAndLength()
 	if err != nil {
-		return LdapError{fmt.Sprintf("ReadSubBytes:\n%s", err.Error())}
+		return LdapError{fmt.Sprintf("ReadSubBytes: %s", err.Error())}
 	}
 	err = tagAndLength.Expect(class, tag, isCompound)
 	if err != nil {
-		return LdapError{fmt.Sprintf("ReadSubBytes:\n%s", err.Error())}
+		return LdapError{fmt.Sprintf("ReadSubBytes: %s", err.Error())}
 	}
 
 	start := bytes.offset
@@ -73,7 +73,7 @@ func (bytes *Bytes) ReadSubBytes(class int, tag int, callback func(bytes *Bytes)
 	err = callback(&subBytes)
 	if err != nil {
 		bytes.offset += subBytes.offset
-		err = LdapError{fmt.Sprintf("ReadSubBytes:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("ReadSubBytes: %s", err.Error())}
 		return
 	}
 	// Check we got no more bytes to process
@@ -152,12 +152,12 @@ func (bytes *Bytes) ReadPrimitiveSubBytes(class int, tag int, typeTag int) (valu
 	// Check tag
 	tagAndLength, err := bytes.ParseTagAndLength()
 	if err != nil {
-		err = LdapError{fmt.Sprintf("ReadPrimitiveSubBytes:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("ReadPrimitiveSubBytes: %s", err.Error())}
 		return
 	}
 	err = tagAndLength.Expect(class, tag, isNotCompound)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("ReadPrimitiveSubBytes:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("ReadPrimitiveSubBytes: %s", err.Error())}
 		return
 	}
 
@@ -186,7 +186,7 @@ func (bytes *Bytes) ReadPrimitiveSubBytes(class int, tag int, typeTag int) (valu
 		return
 	}
 	if err != nil {
-		err = LdapError{fmt.Sprintf("ReadPrimitiveSubBytes:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("ReadPrimitiveSubBytes: %s", err.Error())}
 		return
 	}
 	// Move offset

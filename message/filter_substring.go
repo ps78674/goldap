@@ -7,7 +7,7 @@ func readFilterSubstrings(bytes *Bytes) (filtersubstrings FilterSubstrings, err 
 	var substringfilter SubstringFilter
 	substringfilter, err = readTaggedSubstringFilter(bytes, classContextSpecific, TagFilterSubstrings)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readFilterSubstrings:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readFilterSubstrings: %s", err.Error())}
 		return
 	}
 	filtersubstrings = FilterSubstrings(substringfilter)
@@ -25,7 +25,7 @@ func readFilterSubstrings(bytes *Bytes) (filtersubstrings FilterSubstrings, err 
 func readTaggedSubstringFilter(bytes *Bytes, class int, tag int) (substringfilter SubstringFilter, err error) {
 	err = bytes.ReadSubBytes(class, tag, substringfilter.readComponents)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readTaggedSubstringFilter:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readTaggedSubstringFilter: %s", err.Error())}
 		return
 	}
 	return
@@ -33,12 +33,12 @@ func readTaggedSubstringFilter(bytes *Bytes, class int, tag int) (substringfilte
 func (substringfilter *SubstringFilter) readComponents(bytes *Bytes) (err error) {
 	substringfilter.type_, err = readAttributeDescription(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 		return
 	}
 	err = substringfilter.readSubstrings(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 		return
 	}
 	return
@@ -46,7 +46,7 @@ func (substringfilter *SubstringFilter) readComponents(bytes *Bytes) (err error)
 func (substringfilter *SubstringFilter) readSubstrings(bytes *Bytes) (err error) {
 	err = bytes.ReadSubBytes(classUniversal, tagSequence, substringfilter.readSubstringsComponents)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readSubstrings:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readSubstrings: %s", err.Error())}
 		return
 	}
 	return
@@ -58,7 +58,7 @@ func (substringfilter *SubstringFilter) readSubstringsComponents(bytes *Bytes) (
 	for bytes.HasMoreData() {
 		tagAndLength, err = bytes.PreviewTagAndLength()
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readSubstringsComponents:\n%s", err.Error())}
+			err = LdapError{fmt.Sprintf("readSubstringsComponents: %s", err.Error())}
 			return
 		}
 		var assertionvalue AssertionValue
@@ -71,14 +71,14 @@ func (substringfilter *SubstringFilter) readSubstringsComponents(bytes *Bytes) (
 			}
 			assertionvalue, err = readTaggedAssertionValue(bytes, classContextSpecific, TagSubstringInitial)
 			if err != nil {
-				err = LdapError{fmt.Sprintf("readSubstringsComponents:\n%s", err.Error())}
+				err = LdapError{fmt.Sprintf("readSubstringsComponents: %s", err.Error())}
 				return
 			}
 			substringfilter.substrings = append(substringfilter.substrings, SubstringInitial(assertionvalue))
 		case TagSubstringAny:
 			assertionvalue, err = readTaggedAssertionValue(bytes, classContextSpecific, TagSubstringAny)
 			if err != nil {
-				err = LdapError{fmt.Sprintf("readSubstringsComponents:\n%s", err.Error())}
+				err = LdapError{fmt.Sprintf("readSubstringsComponents: %s", err.Error())}
 				return
 			}
 			substringfilter.substrings = append(substringfilter.substrings, SubstringAny(assertionvalue))
@@ -90,7 +90,7 @@ func (substringfilter *SubstringFilter) readSubstringsComponents(bytes *Bytes) (
 			}
 			assertionvalue, err = readTaggedAssertionValue(bytes, classContextSpecific, TagSubstringFinal)
 			if err != nil {
-				err = LdapError{fmt.Sprintf("readSubstringsComponents:\n%s", err.Error())}
+				err = LdapError{fmt.Sprintf("readSubstringsComponents: %s", err.Error())}
 				return
 			}
 			substringfilter.substrings = append(substringfilter.substrings, SubstringFinal(assertionvalue))

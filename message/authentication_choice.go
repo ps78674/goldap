@@ -12,12 +12,12 @@ import "fmt"
 func readAuthenticationChoice(bytes *Bytes) (ret AuthenticationChoice, err error) {
 	tagAndLength, err := bytes.PreviewTagAndLength()
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readAuthenticationChoice:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readAuthenticationChoice: %s", err.Error())}
 		return
 	}
 	err = tagAndLength.ExpectClass(classContextSpecific)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readAuthenticationChoice:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readAuthenticationChoice: %s", err.Error())}
 		return
 	}
 	switch tagAndLength.Tag {
@@ -30,7 +30,7 @@ func readAuthenticationChoice(bytes *Bytes) (ret AuthenticationChoice, err error
 		return
 	}
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readAuthenticationChoice:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readAuthenticationChoice: %s", err.Error())}
 		return
 	}
 	return

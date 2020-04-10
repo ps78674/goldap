@@ -8,12 +8,12 @@ func readUnbindRequest(bytes *Bytes) (unbindrequest UnbindRequest, err error) {
 	var tagAndLength TagAndLength
 	tagAndLength, err = bytes.ParseTagAndLength()
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readUnbindRequest:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readUnbindRequest: %s", err.Error())}
 		return
 	}
 	err = tagAndLength.Expect(classApplication, TagUnbindRequest, isNotCompound)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readUnbindRequest:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readUnbindRequest: %s", err.Error())}
 		return
 	}
 	if tagAndLength.Length != 0 {

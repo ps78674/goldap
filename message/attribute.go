@@ -19,7 +19,7 @@ func readAttribute(bytes *Bytes) (ret Attribute, err error) {
 	var par PartialAttribute
 	par, err = readPartialAttribute(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readAttribute:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readAttribute: %s", err.Error())}
 		return
 	}
 	if len(par.vals) == 0 {

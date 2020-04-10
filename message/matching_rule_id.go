@@ -8,7 +8,7 @@ func readTaggedMatchingRuleId(bytes *Bytes, class int, tag int) (matchingruleid 
 	var ldapstring LDAPString
 	ldapstring, err = readTaggedLDAPString(bytes, class, tag)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readTaggedMatchingRuleId:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readTaggedMatchingRuleId: %s", err.Error())}
 		return
 	}
 	matchingruleid = MatchingRuleId(ldapstring)

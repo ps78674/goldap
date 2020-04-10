@@ -7,7 +7,7 @@ func readFilterExtensibleMatch(bytes *Bytes) (filterextensiblematch FilterExtens
 	var matchingruleassertion MatchingRuleAssertion
 	matchingruleassertion, err = readTaggedMatchingRuleAssertion(bytes, classContextSpecific, TagFilterExtensibleMatch)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readFilterExtensibleMatch:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readFilterExtensibleMatch: %s", err.Error())}
 		return
 	}
 	filterextensiblematch = FilterExtensibleMatch(matchingruleassertion)

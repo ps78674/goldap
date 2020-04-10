@@ -10,7 +10,7 @@ import "fmt"
 func readAttributeSelection(bytes *Bytes) (attributeSelection AttributeSelection, err error) {
 	err = bytes.ReadSubBytes(classUniversal, tagSequence, attributeSelection.readComponents)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readAttributeSelection:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readAttributeSelection: %s", err.Error())}
 		return
 	}
 	return
@@ -21,7 +21,7 @@ func (selection *AttributeSelection) readComponents(bytes *Bytes) (err error) {
 		ldapstring, err = readLDAPString(bytes)
 		// @TOTO: check <attributeSelector> in Section 4.5.1.8
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 			return
 		}
 		*selection = append(*selection, ldapstring)

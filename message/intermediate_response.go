@@ -9,7 +9,7 @@ import "fmt"
 func readIntermediateResponse(bytes *Bytes) (ret IntermediateResponse, err error) {
 	err = bytes.ReadSubBytes(classApplication, TagIntermediateResponse, ret.readComponents)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readIntermediateResponse:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readIntermediateResponse: %s", err.Error())}
 		return
 	}
 	return
@@ -25,14 +25,14 @@ func (res *IntermediateResponse) readComponents(bytes *Bytes) (err error) {
 		var tag TagAndLength
 		tag, err = bytes.PreviewTagAndLength()
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 			return
 		}
 		if tag.Tag == TagIntermediateResponseName {
 			var oid LDAPOID
 			oid, err = readTaggedLDAPOID(bytes, classContextSpecific, TagIntermediateResponseName)
 			if err != nil {
-				err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+				err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 				return
 			}
 			res.responseName = oid.Pointer()
@@ -42,14 +42,14 @@ func (res *IntermediateResponse) readComponents(bytes *Bytes) (err error) {
 		var tag TagAndLength
 		tag, err = bytes.PreviewTagAndLength()
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 			return
 		}
 		if tag.Tag == TagIntermediateResponseValue {
 			var str OCTETSTRING
 			str, err = readTaggedOCTETSTRING(bytes, classContextSpecific, TagIntermediateResponseValue)
 			if err != nil {
-				err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+				err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 				return
 			}
 			res.responseValue = str.Pointer()

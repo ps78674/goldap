@@ -8,7 +8,7 @@ func readSearchResultDone(bytes *Bytes) (ret SearchResultDone, err error) {
 	var ldapresult LDAPResult
 	ldapresult, err = readTaggedLDAPResult(bytes, classApplication, TagSearchResultDone)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readSearchResultDone:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readSearchResultDone: %s", err.Error())}
 		return
 	}
 	ret = SearchResultDone(ldapresult)

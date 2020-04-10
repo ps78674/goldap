@@ -11,7 +11,7 @@ import "fmt"
 func readTaggedMatchingRuleAssertion(bytes *Bytes, class int, tag int) (ret MatchingRuleAssertion, err error) {
 	err = bytes.ReadSubBytes(class, tag, ret.readComponents)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readTaggedMatchingRuleAssertion:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readTaggedMatchingRuleAssertion: %s", err.Error())}
 		return
 	}
 	return

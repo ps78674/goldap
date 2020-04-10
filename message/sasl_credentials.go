@@ -11,7 +11,7 @@ func readSaslCredentials(bytes *Bytes) (authentication SaslCredentials, err erro
 	authentication = SaslCredentials{}
 	err = bytes.ReadSubBytes(classContextSpecific, TagAuthenticationChoiceSaslCredentials, authentication.readComponents)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readSaslCredentials:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readSaslCredentials: %s", err.Error())}
 		return
 	}
 	return
@@ -19,14 +19,14 @@ func readSaslCredentials(bytes *Bytes) (authentication SaslCredentials, err erro
 func (authentication *SaslCredentials) readComponents(bytes *Bytes) (err error) {
 	authentication.mechanism, err = readLDAPString(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 		return
 	}
 	if bytes.HasMoreData() {
 		var credentials OCTETSTRING
 		credentials, err = readOCTETSTRING(bytes)
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents:\n%s", err.Error())}
+			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
 			return
 		}
 		authentication.credentials = credentials.Pointer()

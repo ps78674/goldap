@@ -23,7 +23,7 @@ func (filterAnd *FilterAnd) readComponents(bytes *Bytes) (err error) {
 		var filter Filter
 		filter, err = readFilter(bytes)
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents (filter %d):\n%s", count, err.Error())}
+			err = LdapError{fmt.Sprintf("readComponents (filter %d): %s", count, err.Error())}
 			return
 		}
 		*filterAnd = append(*filterAnd, filter)
@@ -47,7 +47,7 @@ func (filterAnd FilterAnd) write(bytes *Bytes) (size int) {
 func readFilterAnd(bytes *Bytes) (filterand FilterAnd, err error) {
 	err = bytes.ReadSubBytes(classContextSpecific, TagFilterAnd, filterand.readComponents)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readFilterAnd:\n%s", err.Error())}
+		err = LdapError{fmt.Sprintf("readFilterAnd: %s", err.Error())}
 		return
 	}
 	return
