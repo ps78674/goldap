@@ -320,6 +320,26 @@ type Control struct {
 }
 
 //
+//        Control ::= SEQUENCE {
+//             controlType     1.2.840.113556.1.4.319,
+//             criticality     BOOLEAN DEFAULT FALSE,
+//             controlValue    ControlTypePaging
+//        }
+//
+//        ControlTypePaging ::= SEQUENCE {
+//             size            INTEGER (0..maxInt),
+// 							   -- requested page size from client
+// 							   -- result set size estimate from server
+//             cookie          OCTET STRING
+//        }
+const ControlTypePaging = "1.2.840.113556.1.4.319"
+
+type ControlPaging struct {
+	pageSize INTEGER
+	cookie   OCTETSTRING
+}
+
+//
 //
 //
 //
