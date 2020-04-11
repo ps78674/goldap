@@ -22,6 +22,13 @@ func (control *Control) ControlValue() *OCTETSTRING {
 	return control.controlValue
 }
 
+func NewControl(t LDAPOID, c BOOLEAN, v OCTETSTRING) (control Control) {
+	control.controlType = t
+	control.criticality = c
+	control.controlValue = &v
+	return
+}
+
 func readControl(bytes *Bytes) (control Control, err error) {
 	err = bytes.ReadSubBytes(classUniversal, tagSequence, control.readComponents)
 	if err != nil {

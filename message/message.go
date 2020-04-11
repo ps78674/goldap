@@ -47,6 +47,19 @@ import (
 
 func NewLDAPMessage() *LDAPMessage { return &LDAPMessage{} }
 
+func NewLDAPMessageWithProtocolOp(po ProtocolOp) *LDAPMessage {
+	m := NewLDAPMessage()
+	m.protocolOp = po
+	return m
+}
+
+func NewLDAPMessageWithProtocolOpAndControls(po ProtocolOp, cs Controls) *LDAPMessage {
+	m := NewLDAPMessage()
+	m.protocolOp = po
+	m.controls = &cs
+	return m
+}
+
 func (message *LDAPMessage) readComponents(bytes *Bytes) (err error) {
 	message.messageID, err = readMessageID(bytes)
 	if err != nil {

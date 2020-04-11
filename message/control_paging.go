@@ -21,12 +21,10 @@ func (control *ControlPaging) Cookie() OCTETSTRING {
 	return control.cookie
 }
 
-func (control *ControlPaging) SetPageSize(i INTEGER) {
+func NewControlPaging(i INTEGER, s OCTETSTRING) (control ControlPaging) {
 	control.pageSize = i
-}
-
-func (control *ControlPaging) SetCookie(s OCTETSTRING) {
 	control.cookie = s
+	return
 }
 
 func (control *ControlPaging) readComponents(bytes *Bytes) (err error) {
@@ -67,10 +65,6 @@ func ReadControlPaging(bytes *Bytes) (cp ControlPaging, err error) {
 }
 
 func (cp *ControlPaging) WriteControlPaging() (bytes *Bytes, err error) {
-	// if cp.cookie == nil {
-	// 	cp.cookie = OCTETSTRING("")
-	// }
-
 	// Compute the needed size
 	totalSize := cp.size()
 	// Initialize the structure
