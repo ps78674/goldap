@@ -436,13 +436,15 @@ type SearchRequest struct {
 }
 
 const SearchRequestScopeBaseObject = 0
-const SearchRequestSingleLevel = 1
-const SearchRequestHomeSubtree = 2
+const SearchRequestScopeOneLevel = 1
+const SearchRequestScopeSubtree = 2
+const SearchRequestScopeChildren = 3
 
 var EnumeratedSearchRequestScope = map[ENUMERATED]string{
-	SearchRequestScopeBaseObject: "baseObject",
-	SearchRequestSingleLevel:     "singleLevel",
-	SearchRequestHomeSubtree:     "homeSubtree",
+	SearchRequestScopeBaseObject: "scopeBaseObject",
+	SearchRequestScopeOneLevel:   "scopeOneLevel",
+	SearchRequestScopeSubtree:    "scopeSubtree",
+	SearchRequestScopeChildren:   "scopeChildren",
 }
 
 const SearchRequetDerefAliasesNeverDerefAliases = 0
