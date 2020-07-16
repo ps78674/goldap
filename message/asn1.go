@@ -40,8 +40,8 @@ var tagNames = map[int]string{
 	tagInteger:     "INTEGER",
 	tagOctetString: "OCTET STRING",
 	tagEnum:        "ENUM",
-	tagSequence: "SEQUENCE",
-	tagSet:      "SET",
+	tagSequence:    "SEQUENCE",
+	tagSet:         "SET",
 }
 
 const (
@@ -224,17 +224,32 @@ func parseInt64(bytes []byte) (ret int64, err error) {
 }
 
 func sizeInt64(i int64) (size int) {
+	lastValue := int64(0)
 	for ; i != 0 || size == 0; i >>= 8 {
 		size++
+		lastValue = i
 	}
+
+	if lastValue >= 0x80 && lastValue <= 0xff { // hex(0x80) -> decimal(128), hex(0xff) -> decimal(255)
+		size++
+	}
+
 	return
 }
 
 func writeInt64(bytes *Bytes, i int64) (size int) {
+	lastValue := int64(0)
 	for ; i != 0 || size == 0; i >>= 8 { // Write at least one byte even if the value is 0
 		bytes.writeBytes([]byte{byte(i)})
 		size++
+		lastValue = i
 	}
+
+	if (lastValue >= 0x80 && lastValue <= 0xff) && (bytes.offset == 5 || bytes.offset == 7) {
+		bytes.writeBytes([]byte{byte(0)})
+		size++
+	}
+
 	return
 }
 
