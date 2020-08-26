@@ -245,8 +245,7 @@ func writeInt64(bytes *Bytes, i int64) (size int) {
 		lastValue = i
 	}
 
-	// if (lastValue >= 0x80 && lastValue <= 0xff) && (bytes.offset == 0x05 || bytes.offset == 0x07) {
-	if (lastValue >= 0x80 && bytes.offset == 0x05) || (lastValue <= 0xff && bytes.offset == 0x07) {
+	if (lastValue >= 0x80 && lastValue <= 0xff) && (bytes.offset >= 0x05 && bytes.offset <= 0x07) {
 		bytes.writeBytes([]byte{byte(0)})
 		size++
 	}
