@@ -53,6 +53,10 @@ func NewLDAPMessageWithProtocolOp(po ProtocolOp) *LDAPMessage {
 	return m
 }
 
+func SetMessageID(m *LDAPMessage, ID int) {
+	m.messageID = MessageID(ID)
+}
+
 func SetMessageControls(m *LDAPMessage, cs Controls) {
 	m.controls = &cs
 }
@@ -127,9 +131,6 @@ func (m *LDAPMessage) size() (size int) {
 }
 func (l *LDAPMessage) MessageID() MessageID {
 	return l.messageID
-}
-func (l *LDAPMessage) SetMessageID(ID int) {
-	l.messageID = MessageID(ID)
 }
 func (l *LDAPMessage) Controls() *Controls {
 	return l.controls
