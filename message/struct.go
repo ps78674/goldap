@@ -326,15 +326,15 @@ type Control struct {
 //             controlValue    ControlTypePaging
 //        }
 //
-//        ControlTypePaging ::= SEQUENCE {
+//        SimplePagedResultsControl ::= SEQUENCE {
 //             size            INTEGER (0..maxInt),
 // 							   -- requested page size from client
 // 							   -- result set size estimate from server
 //             cookie          OCTET STRING
 //        }
-const ControlTypePaging = "1.2.840.113556.1.4.319"
+const PagedResultsControlOID = LDAPOID("1.2.840.113556.1.4.319")
 
-type ControlPaging struct {
+type SimplePagedResultsControl struct {
 	pageSize INTEGER
 	cookie   OCTETSTRING
 }

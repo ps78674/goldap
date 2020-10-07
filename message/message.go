@@ -53,11 +53,8 @@ func NewLDAPMessageWithProtocolOp(po ProtocolOp) *LDAPMessage {
 	return m
 }
 
-func NewLDAPMessageWithProtocolOpAndControls(po ProtocolOp, cs Controls) *LDAPMessage {
-	m := NewLDAPMessage()
-	m.protocolOp = po
+func SetMessageControls(m *LDAPMessage, cs Controls) {
 	m.controls = &cs
-	return m
 }
 
 func (message *LDAPMessage) readComponents(bytes *Bytes) (err error) {
