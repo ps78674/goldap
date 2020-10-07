@@ -27,14 +27,14 @@ func (extended *ExtendedResponse) readComponents(bytes *Bytes) (err error) {
 		var tag TagAndLength
 		tag, err = bytes.PreviewTagAndLength()
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+			err = LdapError{fmt.Sprintf("ExtendedResponse.readComponents: %s", err.Error())}
 			return
 		}
 		if tag.Tag == TagExtendedResponseName {
 			var oid LDAPOID
 			oid, err = readTaggedLDAPOID(bytes, classContextSpecific, TagExtendedResponseName)
 			if err != nil {
-				err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+				err = LdapError{fmt.Sprintf("ExtendedResponse.readComponents: %s", err.Error())}
 				return
 			}
 			extended.responseName = oid.Pointer()
@@ -44,14 +44,14 @@ func (extended *ExtendedResponse) readComponents(bytes *Bytes) (err error) {
 		var tag TagAndLength
 		tag, err = bytes.PreviewTagAndLength()
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+			err = LdapError{fmt.Sprintf("ExtendedResponse.readComponents: %s", err.Error())}
 			return
 		}
 		if tag.Tag == TagExtendedResponseValue {
 			var responseValue OCTETSTRING
 			responseValue, err = readTaggedOCTETSTRING(bytes, classContextSpecific, TagExtendedResponseValue)
 			if err != nil {
-				err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+				err = LdapError{fmt.Sprintf("ExtendedResponse.readComponents: %s", err.Error())}
 				return
 			}
 			extended.responseValue = responseValue.Pointer()

@@ -79,33 +79,33 @@ type TagAndLength struct {
 func (t *TagAndLength) Expect(class int, tag int, isCompound bool) (err error) {
 	err = t.ExpectClass(class)
 	if err != nil {
-		return LdapError{fmt.Sprintf("Expect: %s.", err)}
+		return LdapError{fmt.Sprintf("TagAndLength.Expect: %s.", err)}
 	}
 	err = t.ExpectTag(tag)
 	if err != nil {
-		return LdapError{fmt.Sprintf("Expect: %s.", err)}
+		return LdapError{fmt.Sprintf("TagAndLength.Expect: %s.", err)}
 	}
 	err = t.ExpectCompound(isCompound)
 	if err != nil {
-		return LdapError{fmt.Sprintf("Expect: %s.", err)}
+		return LdapError{fmt.Sprintf("TagAndLength.Expect: %s.", err)}
 	}
 	return
 }
 func (t *TagAndLength) ExpectClass(class int) (err error) {
 	if class != t.Class {
-		err = SyntaxError{fmt.Sprintf("ExpectClass: wrong tag class: got %d (%s), expected %d (%s)", t.Class, classNames[t.Class], class, classNames[class])}
+		err = SyntaxError{fmt.Sprintf("TagAndLength.ExpectClass: wrong tag class: got %d (%s), expected %d (%s)", t.Class, classNames[t.Class], class, classNames[class])}
 	}
 	return
 }
 func (t *TagAndLength) ExpectTag(tag int) (err error) {
 	if tag != t.Tag {
-		err = SyntaxError{fmt.Sprintf("ExpectTag: wrong tag value: got %d (%s), expected %d (%s)", t.Tag, tagNames[t.Tag], tag, tagNames[tag])}
+		err = SyntaxError{fmt.Sprintf("TagAndLength.ExpectTag: wrong tag value: got %d (%s), expected %d (%s)", t.Tag, tagNames[t.Tag], tag, tagNames[tag])}
 	}
 	return
 }
 func (t *TagAndLength) ExpectCompound(isCompound bool) (err error) {
 	if isCompound != t.IsCompound {
-		err = SyntaxError{fmt.Sprintf("ExpectCompound: wrong tag compound: got %t (%s), expected %t (%s)", t.IsCompound, compoundNames[t.IsCompound], isCompound, compoundNames[isCompound])}
+		err = SyntaxError{fmt.Sprintf("TagAndLength.ExpectCompound: wrong tag compound: got %t (%s), expected %t (%s)", t.IsCompound, compoundNames[t.IsCompound], isCompound, compoundNames[isCompound])}
 	}
 	return
 }
@@ -184,7 +184,7 @@ func parseBool(bytes []byte) (ret bool, err error) {
 	case 0xff:
 		ret = true
 	default:
-		err = SyntaxError{"invalid boolean: should be 0x00 of 0xFF"}
+		err = SyntaxError{"invalid boolean: should be 0x00 or 0xFF"}
 	}
 
 	return

@@ -21,7 +21,7 @@ func (selection *AttributeSelection) readComponents(bytes *Bytes) (err error) {
 		ldapstring, err = readLDAPString(bytes)
 		// @TOTO: check <attributeSelector> in Section 4.5.1.8
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+			err = LdapError{fmt.Sprintf("AttributeSelection.readComponents: %s", err.Error())}
 			return
 		}
 		*selection = append(*selection, ldapstring)

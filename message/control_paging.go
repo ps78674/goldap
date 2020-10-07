@@ -24,12 +24,12 @@ func (control *SimplePagedResultsControl) Cookie() OCTETSTRING {
 func (control *SimplePagedResultsControl) readComponents(bytes *Bytes) (err error) {
 	control.pageSize, err = readINTEGER(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("SimplePagedResultsControl.readComponents: %s", err.Error())}
 		return
 	}
 	control.cookie, err = readOCTETSTRING(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("SimplePagedResultsControl.readComponents: %s", err.Error())}
 		return
 	}
 	return

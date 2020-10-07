@@ -37,12 +37,12 @@ func readTaggedAttributeValueAssertion(bytes *Bytes, class int, tag int) (ret At
 func (assertion *AttributeValueAssertion) readComponents(bytes *Bytes) (err error) {
 	assertion.attributeDesc, err = readAttributeDescription(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("AttributeValueAssertion.readComponents: %s", err.Error())}
 		return
 	}
 	assertion.assertionValue, err = readAssertionValue(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("AttributeValueAssertion.readComponents: %s", err.Error())}
 		return
 	}
 	return

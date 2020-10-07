@@ -64,26 +64,26 @@ func SetMessageControls(m *LDAPMessage, cs Controls) {
 func (message *LDAPMessage) readComponents(bytes *Bytes) (err error) {
 	message.messageID, err = readMessageID(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("LDAPMessage.readComponents: %s", err.Error())}
 		return
 	}
 	message.protocolOp, err = readProtocolOp(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("LDAPMessage.readComponents: %s", err.Error())}
 		return
 	}
 	if bytes.HasMoreData() {
 		var tag TagAndLength
 		tag, err = bytes.PreviewTagAndLength()
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+			err = LdapError{fmt.Sprintf("LDAPMessage.readComponents: %s", err.Error())}
 			return
 		}
 		if tag.Tag == TagLDAPMessageControls {
 			var controls Controls
 			controls, err = readTaggedControls(bytes, classContextSpecific, TagLDAPMessageControls)
 			if err != nil {
-				err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+				err = LdapError{fmt.Sprintf("LDAPMessage.readComponents: %s", err.Error())}
 				return
 			}
 			message.controls = controls.Pointer()
@@ -95,7 +95,7 @@ func (message *LDAPMessage) readComponents(bytes *Bytes) (err error) {
 func (m *LDAPMessage) Write() (bytes *Bytes, err error) {
 	defer func() {
 		if e := recover(); e != nil {
-			err = LdapError{fmt.Sprintf("Error in LDAPMessage.Write: %s", e)}
+			err = LdapError{fmt.Sprintf("LDAPMessage.Write: %s", e)}
 		}
 	}()
 	// Compute the needed size
@@ -116,7 +116,7 @@ func (m *LDAPMessage) Write() (bytes *Bytes, err error) {
 	size += bytes.WriteTagAndLength(classUniversal, isCompound, tagSequence, size)
 	// Check
 	if size != totalSize || bytes.offset != 0 {
-		err = LdapError{fmt.Sprintf("Something went wrong while writing the message ! Size is %d instead of %d, final offset is %d instead of 0", size, totalSize, bytes.offset)}
+		err = LdapError{fmt.Sprintf("LDAPMessage.Write: size is %d instead of %d, final offset is %d instead of 0", size, totalSize, bytes.offset)}
 	}
 	return
 }

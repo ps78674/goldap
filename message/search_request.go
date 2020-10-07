@@ -34,42 +34,42 @@ func readSearchRequest(bytes *Bytes) (searchrequest SearchRequest, err error) {
 func (searchrequest *SearchRequest) readComponents(bytes *Bytes) (err error) {
 	searchrequest.baseObject, err = readLDAPDN(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("SearchRequest.readComponents: %s", err.Error())}
 		return
 	}
 	searchrequest.scope, err = readENUMERATED(bytes, EnumeratedSearchRequestScope)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("SearchRequest.readComponents: %s", err.Error())}
 		return
 	}
 	searchrequest.derefAliases, err = readENUMERATED(bytes, EnumeratedSearchRequestDerefAliases)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("SearchRequest.readComponents: %s", err.Error())}
 		return
 	}
 	searchrequest.sizeLimit, err = readPositiveINTEGER(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("SearchRequest.readComponents: %s", err.Error())}
 		return
 	}
 	searchrequest.timeLimit, err = readPositiveINTEGER(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("SearchRequest.readComponents: %s", err.Error())}
 		return
 	}
 	searchrequest.typesOnly, err = readBOOLEAN(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("SearchRequest.readComponents: %s", err.Error())}
 		return
 	}
 	searchrequest.filter, err = readFilter(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("SearchRequest.readComponents: %s", err.Error())}
 		return
 	}
 	searchrequest.attributes, err = readAttributeSelection(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("SearchRequest.readComponents: %s", err.Error())}
 		return
 	}
 	return
@@ -167,7 +167,7 @@ func (s *SearchRequest) FilterString() string {
 func (s *SearchRequest) decompileFilter(packet Filter) (ret string, err error) {
 	defer func() {
 		if r := recover(); r != nil {
-			err = errors.New("error decompiling filter")
+			err = errors.New("SearchRequest.decompileFilter: error decompiling filter")
 		}
 	}()
 

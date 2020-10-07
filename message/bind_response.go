@@ -21,14 +21,14 @@ func (response *BindResponse) readComponents(bytes *Bytes) (err error) {
 		var tag TagAndLength
 		tag, err = bytes.PreviewTagAndLength()
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+			err = LdapError{fmt.Sprintf("BindResponse.readComponents: %s", err.Error())}
 			return
 		}
 		if tag.Tag == TagBindResponseServerSaslCreds {
 			var serverSaslCreds OCTETSTRING
 			serverSaslCreds, err = readTaggedOCTETSTRING(bytes, classContextSpecific, TagBindResponseServerSaslCreds)
 			if err != nil {
-				err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+				err = LdapError{fmt.Sprintf("BindResponse.readComponents: %s", err.Error())}
 				return
 			}
 			response.serverSaslCreds = serverSaslCreds.Pointer()

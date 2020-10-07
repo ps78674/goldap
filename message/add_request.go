@@ -27,12 +27,12 @@ func readAddRequest(bytes *Bytes) (ret AddRequest, err error) {
 func (add *AddRequest) readComponents(bytes *Bytes) (err error) {
 	add.entry, err = readLDAPDN(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("AddRequest.readComponents: %s", err.Error())}
 		return
 	}
 	add.attributes, err = readAttributeList(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("AddRequest.readComponents: %s", err.Error())}
 		return
 	}
 	return

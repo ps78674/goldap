@@ -17,13 +17,13 @@ func (referral *Referral) readComponents(bytes *Bytes) (err error) {
 		var uri URI
 		uri, err = readURI(bytes)
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+			err = LdapError{fmt.Sprintf("Referral.readComponents: %s", err.Error())}
 			return
 		}
 		*referral = append(*referral, uri)
 	}
 	if len(*referral) == 0 {
-		return LdapError{"readComponents: expecting at least one URI"}
+		return LdapError{"Referral.readComponents: expecting at least one URI"}
 	}
 	return
 }

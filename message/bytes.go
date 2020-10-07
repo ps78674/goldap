@@ -42,7 +42,7 @@ func (bytes *Bytes) ParseTagAndLength() (ret TagAndLength, err error) {
 	var offset int
 	ret, offset, err = ParseTagAndLength(bytes.bytes, bytes.offset)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("ParseTagAndLength: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("Bytes.ParseTagAndLength: %s", err.Error())}
 		return
 	} else {
 		bytes.offset = offset
@@ -54,11 +54,11 @@ func (bytes *Bytes) ReadSubBytes(class int, tag int, callback func(bytes *Bytes)
 	// Check tag
 	tagAndLength, err := bytes.ParseTagAndLength()
 	if err != nil {
-		return LdapError{fmt.Sprintf("ReadSubBytes: %s", err.Error())}
+		return LdapError{fmt.Sprintf("Bytes.ReadSubBytes: %s", err.Error())}
 	}
 	err = tagAndLength.Expect(class, tag, isCompound)
 	if err != nil {
-		return LdapError{fmt.Sprintf("ReadSubBytes: %s", err.Error())}
+		return LdapError{fmt.Sprintf("Bytes.ReadSubBytes: %s", err.Error())}
 	}
 
 	start := bytes.offset
@@ -66,19 +66,19 @@ func (bytes *Bytes) ReadSubBytes(class int, tag int, callback func(bytes *Bytes)
 
 	// Check we got enough bytes to process
 	if end > len(bytes.bytes) {
-		return LdapError{fmt.Sprintf("ReadSubBytes: data truncated: expecting %d bytes at offset %d", tagAndLength.Length, bytes.offset)}
+		return LdapError{fmt.Sprintf("Bytes.ReadSubBytes: data truncated: expecting %d bytes at offset %d", tagAndLength.Length, bytes.offset)}
 	}
 	// Process sub-bytes
 	subBytes := Bytes{offset: 0, bytes: bytes.bytes[start:end]}
 	err = callback(&subBytes)
 	if err != nil {
 		bytes.offset += subBytes.offset
-		err = LdapError{fmt.Sprintf("ReadSubBytes: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("Bytes.ReadSubBytes: %s", err.Error())}
 		return
 	}
 	// Check we got no more bytes to process
 	if subBytes.HasMoreData() {
-		return LdapError{fmt.Sprintf("ReadSubBytes: data too long: %d more bytes to read at offset %d", end-bytes.offset, bytes.offset)}
+		return LdapError{fmt.Sprintf("Bytes.ReadSubBytes: data too long: %d more bytes to read at offset %d", end-bytes.offset, bytes.offset)}
 	}
 	// Move offset
 	bytes.offset = end
@@ -102,7 +102,7 @@ func (bytes *Bytes) WritePrimitiveSubBytes(class int, tag int, value interface{}
 	case OCTETSTRING:
 		size = writeOctetString(bytes, []byte(string(value.(OCTETSTRING))))
 	default:
-		panic(fmt.Sprintf("WritePrimitiveSubBytes: invalid value type %v", value))
+		panic(fmt.Sprintf("Bytes.WritePrimitiveSubBytes: invalid value type %v", value))
 	}
 	size += bytes.WriteTagAndLength(class, isNotCompound, tag, size)
 	return
@@ -152,12 +152,12 @@ func (bytes *Bytes) ReadPrimitiveSubBytes(class int, tag int, typeTag int) (valu
 	// Check tag
 	tagAndLength, err := bytes.ParseTagAndLength()
 	if err != nil {
-		err = LdapError{fmt.Sprintf("ReadPrimitiveSubBytes: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("Bytes.ReadPrimitiveSubBytes: %s", err.Error())}
 		return
 	}
 	err = tagAndLength.Expect(class, tag, isNotCompound)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("ReadPrimitiveSubBytes: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("Bytes.ReadPrimitiveSubBytes: %s", err.Error())}
 		return
 	}
 
@@ -167,7 +167,7 @@ func (bytes *Bytes) ReadPrimitiveSubBytes(class int, tag int, typeTag int) (valu
 	// Check we got enough bytes to process
 	if end > len(bytes.bytes) {
 		// err = LdapError{fmt.Sprintf("ReadPrimitiveSubBytes: data truncated: expecting %d bytes at offset %d but only %d bytes are remaining (start: %d, length: %d, end: %d, len(b): %d, bytes: %#+v)", tagAndLength.Length, *b.offset, len(b.bytes)-start, start, tagAndLength.Length, end, len(b.bytes), b.bytes)}
-		err = LdapError{fmt.Sprintf("ReadPrimitiveSubBytes: data truncated: expecting %d bytes at offset %d but only %d bytes are remaining", tagAndLength.Length, bytes.offset, len(bytes.bytes)-start)}
+		err = LdapError{fmt.Sprintf("Bytes.ReadPrimitiveSubBytes: data truncated: expecting %d bytes at offset %d but only %d bytes are remaining", tagAndLength.Length, bytes.offset, len(bytes.bytes)-start)}
 		return
 	}
 	// Process sub-bytes
@@ -182,11 +182,11 @@ func (bytes *Bytes) ReadPrimitiveSubBytes(class int, tag int, typeTag int) (valu
 	case tagOctetString:
 		value, err = parseOctetString(subBytes)
 	default:
-		err = LdapError{fmt.Sprintf("ReadPrimitiveSubBytes: invalid type tag value %d", typeTag)}
+		err = LdapError{fmt.Sprintf("Bytes.ReadPrimitiveSubBytes: invalid type tag value %d", typeTag)}
 		return
 	}
 	if err != nil {
-		err = LdapError{fmt.Sprintf("ReadPrimitiveSubBytes: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("Bytes.ReadPrimitiveSubBytes: %s", err.Error())}
 		return
 	}
 	// Move offset

@@ -18,12 +18,12 @@ func readPartialAttribute(bytes *Bytes) (ret PartialAttribute, err error) {
 func (partialattribute *PartialAttribute) readComponents(bytes *Bytes) (err error) {
 	partialattribute.type_, err = readAttributeDescription(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("PartialAttribute.readComponents: %s", err.Error())}
 		return
 	}
 	err = bytes.ReadSubBytes(classUniversal, tagSet, partialattribute.readValsComponents)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("PartialAttribute.readComponents: %s", err.Error())}
 		return
 	}
 	return
@@ -33,7 +33,7 @@ func (partialattribute *PartialAttribute) readValsComponents(bytes *Bytes) (err 
 		var attributevalue AttributeValue
 		attributevalue, err = readAttributeValue(bytes)
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readValsComponents: %s", err.Error())}
+			err = LdapError{fmt.Sprintf("PartialAttribute.readValsComponents: %s", err.Error())}
 			return
 		}
 		partialattribute.vals = append(partialattribute.vals, attributevalue)

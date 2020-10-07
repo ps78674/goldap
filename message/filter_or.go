@@ -18,13 +18,13 @@ func (filteror *FilterOr) readComponents(bytes *Bytes) (err error) {
 		var filter Filter
 		filter, err = readFilter(bytes)
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents (filter %d): %s", count, err.Error())}
+			err = LdapError{fmt.Sprintf("FilterOr.readComponents (filter %d): %s", count, err.Error())}
 			return
 		}
 		*filteror = append(*filteror, filter)
 	}
 	if len(*filteror) == 0 {
-		err = LdapError{"readComponents: expecting at least one Filter"}
+		err = LdapError{"FilterOr.readComponents: expecting at least one Filter"}
 		return
 	}
 	return

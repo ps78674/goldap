@@ -77,31 +77,31 @@ func readLDAPResult(bytes *Bytes) (ldapresult LDAPResult, err error) {
 func (ldapresult *LDAPResult) readComponents(bytes *Bytes) (err error) {
 	ldapresult.resultCode, err = readENUMERATED(bytes, EnumeratedLDAPResultCode)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("LDAPResult.readComponents: %s", err.Error())}
 		return
 	}
 	ldapresult.matchedDN, err = readLDAPDN(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("LDAPResult.readComponents: %s", err.Error())}
 		return
 	}
 	ldapresult.diagnosticMessage, err = readLDAPString(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("LDAPResult.readComponents: %s", err.Error())}
 		return
 	}
 	if bytes.HasMoreData() {
 		var tag TagAndLength
 		tag, err = bytes.PreviewTagAndLength()
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+			err = LdapError{fmt.Sprintf("LDAPResult.readComponents: %s", err.Error())}
 			return
 		}
 		if tag.Tag == TagLDAPResultReferral {
 			var referral Referral
 			referral, err = readTaggedReferral(bytes, classContextSpecific, TagLDAPResultReferral)
 			if err != nil {
-				err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+				err = LdapError{fmt.Sprintf("LDAPResult.readComponents: %s", err.Error())}
 				return
 			}
 			ldapresult.referral = referral.Pointer()

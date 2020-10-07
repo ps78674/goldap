@@ -18,7 +18,7 @@ func (list *AttributeList) readComponents(bytes *Bytes) (err error) {
 		var attr Attribute
 		attr, err = readAttribute(bytes)
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+			err = LdapError{fmt.Sprintf("AttributeList.readComponents: %s", err.Error())}
 			return
 		}
 		*list = append(*list, attr)

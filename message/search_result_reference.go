@@ -18,13 +18,13 @@ func (s *SearchResultReference) readComponents(bytes *Bytes) (err error) {
 		var uri URI
 		uri, err = readURI(bytes)
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+			err = LdapError{fmt.Sprintf("SearchResultReference.readComponents: %s", err.Error())}
 			return
 		}
 		*s = append(*s, uri)
 	}
 	if len(*s) == 0 {
-		err = LdapError{"readComponents: expecting at least one URI"}
+		err = LdapError{"SearchResultReference.readComponents: expecting at least one URI"}
 		return
 	}
 	return

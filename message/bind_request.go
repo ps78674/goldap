@@ -41,21 +41,21 @@ func readBindRequest(bytes *Bytes) (bindrequest BindRequest, err error) {
 func (request *BindRequest) readComponents(bytes *Bytes) (err error) {
 	request.version, err = readINTEGER(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("BindRequest.readComponents: %s", err.Error())}
 		return
 	}
 	if !(request.version >= BindRequestVersionMin && request.version <= BindRequestVersionMax) {
-		err = LdapError{fmt.Sprintf("readComponents: invalid version %d, must be between %d and %d", request.version, BindRequestVersionMin, BindRequestVersionMax)}
+		err = LdapError{fmt.Sprintf("BindRequest.readComponents: invalid version %d, must be between %d and %d", request.version, BindRequestVersionMin, BindRequestVersionMax)}
 		return
 	}
 	request.name, err = readLDAPDN(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("BindRequest.readComponents: %s", err.Error())}
 		return
 	}
 	request.authentication, err = readAuthenticationChoice(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("BindRequest.readComponents: %s", err.Error())}
 		return
 	}
 	return

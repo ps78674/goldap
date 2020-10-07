@@ -16,7 +16,7 @@ func (filterNot FilterNot) size() (size int) {
 func (filterNot *FilterNot) readComponents(bytes *Bytes) (err error) {
 	filterNot.Filter, err = readFilter(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("FilterNot.readComponents: %s", err.Error())}
 		return
 	}
 	return

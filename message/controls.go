@@ -18,7 +18,7 @@ func (controls *Controls) readComponents(bytes *Bytes) (err error) {
 		var control Control
 		control, err = readControl(bytes)
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+			err = LdapError{fmt.Sprintf("Controls.readComponents: %s", err.Error())}
 			return
 		}
 		*controls = append(*controls, control)

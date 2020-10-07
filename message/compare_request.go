@@ -27,12 +27,12 @@ func readCompareRequest(bytes *Bytes) (ret CompareRequest, err error) {
 func (request *CompareRequest) readComponents(bytes *Bytes) (err error) {
 	request.entry, err = readLDAPDN(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("CompareRequest.readComponents: %s", err.Error())}
 		return
 	}
 	request.ava, err = readAttributeValueAssertion(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("CompareRequest.readComponents: %s", err.Error())}
 		return
 	}
 	return

@@ -13,12 +13,12 @@ func readModifyRequestChange(bytes *Bytes) (ret ModifyRequestChange, err error) 
 func (m *ModifyRequestChange) readComponents(bytes *Bytes) (err error) {
 	m.operation, err = readENUMERATED(bytes, EnumeratedModifyRequestChangeOperation)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("ModifyRequestChange.readComponents: %s", err.Error())}
 		return
 	}
 	m.modification, err = readPartialAttribute(bytes)
 	if err != nil {
-		err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+		err = LdapError{fmt.Sprintf("ModifyRequestChange.readComponents: %s", err.Error())}
 		return
 	}
 	return

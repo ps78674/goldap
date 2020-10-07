@@ -19,7 +19,7 @@ func (partialattributelist *PartialAttributeList) readComponents(bytes *Bytes) (
 		var partialattribute PartialAttribute
 		partialattribute, err = readPartialAttribute(bytes)
 		if err != nil {
-			err = LdapError{fmt.Sprintf("readComponents: %s", err.Error())}
+			err = LdapError{fmt.Sprintf("PartialAttributeList.readComponents: %s", err.Error())}
 			return
 		}
 		*partialattributelist = append(*partialattributelist, partialattribute)
